@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+
+import Building from '../Building';
+
 import { useEffectOnMount } from '../../helpers/customHooks';
 import { fetchBuildings } from '../../helpers/api';
 
@@ -15,18 +18,13 @@ const Buildings = () => {
   })
 
   return (
-    <div>
-      <h3>Buildings!</h3>
-
+    <>
       <div className="buildings-container">
         {buildings.map(building => (
-          <div key={building.id} className="building">
-            {building.address}
-            {building.client_name}
-          </div>
+          <Building key={building.id} {...building}/>
         ))}
       </div>
-    </div>
+    </>
   );
 };
 
