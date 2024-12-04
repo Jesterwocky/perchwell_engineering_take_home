@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import { useEffectOnMount } from '../../helpers/customHooks';
+import { fetchBuildings } from '../../helpers/api';
 
 const Buildings = () => {
   const [buildings, updateBuildings] = useState([])
 
+  async function getAllBuildings() {
+    const buildings = await fetchBuildings()
+    updateBuildings(buildings)
+  }
+
   useEffectOnMount(() => {
-    console.log('mounting')
+    getAllBuildings()
   })
 
   return (
@@ -14,7 +20,7 @@ const Buildings = () => {
 
       <div className="buildings-container">
         {buildings.map(building => (
-          <div className="building">
+          <div key={building.id} className="building">
             {building.address}
             {building.client_name}
           </div>
