@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
+import { useEffectOnMount } from '../../helpers/customHooks';
 
 const Buildings = () => {
   const [buildings, updateBuildings] = useState([])
+
+  useEffectOnMount(() => {
+    console.log('mounting')
+  })
 
   return (
     <div>
