@@ -39,16 +39,17 @@ function Building({ building, customFields }) {
     setIsEditing(false);
   };
 
-  function getOptions(fieldName) {
+
+  function getFieldTypeConfig(fieldName) {    
     const defaultField = defaultBuildingFields.find(f => f.name === fieldName);
 
     if (defaultField) {
-      return defaultField.options;
+      return defaultField
     } else {
       const field = customFields.find(customField => customField.name === fieldName);
-      return field?.options ?? [];
-    };
-  };
+      return field ?? {}
+    }
+  }
 
   return (
     <div className="building">
@@ -72,7 +73,7 @@ function Building({ building, customFields }) {
           key={`${client}-${address}-${fieldName}`}
           name={fieldName}
           val={otherFields[fieldName]}
-          options={getOptions(fieldName)}
+          {...getFieldTypeConfig(fieldName)}
           isEditing={isEditing}
           onChange={val => handleFieldEdit(fieldName, val)}
         />

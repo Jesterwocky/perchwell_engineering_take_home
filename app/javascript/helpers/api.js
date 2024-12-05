@@ -65,7 +65,7 @@ const dummyClientData = {
 function createDummyApiResponse(data) {
   return {
     status: 'success',
-    ...dummyBuildingsData
+    ...data
   }
 }
 

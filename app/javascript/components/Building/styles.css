@@ -44,6 +44,7 @@
   
 } */
 
-input {
+input,
+select {
   min-width: 50%;
 }
