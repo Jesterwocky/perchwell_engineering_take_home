@@ -26,7 +26,7 @@ function FieldValue({ type, val, options, onChange }) {
           onChange={handleChange}
         >
           <option value="">
-            Select client
+            Select...
           </option>
           {(options ?? []).map(option => (
             <option

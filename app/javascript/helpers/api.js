@@ -31,12 +31,12 @@ const dummyClientData = {
       id: 'client-1',
       custom_fields: [
         {
-          id: 'field-1',
+          id: 'custom-field-1',
           name: 'rock_wall_size',
           type: 'number'
         },
         {
-          id: 'field-2',
+          id: 'custom-field-2',
           name: 'rock_wall_length',
           type: 'number'
         },
@@ -47,13 +47,13 @@ const dummyClientData = {
       id: 'client-2',
       custom_fields: [
         {
-          id: 'field-3',
+          id: 'custom-field-3',
           name: 'brick_color',
           type: 'enum',
           options: ['red', 'black', 'white', 'beige',]
         },
         {
-          id: 'field-4',
+          id: 'custom-field-4',
           name: 'brick_count',
           type: 'number'
         },
@@ -78,11 +78,23 @@ function dummyGetClientData() {
 }
 
 function dummyCreateBuilding(building) {
+  const { client_id, custom_fields, ...fields } = building
+
+  const client = dummyClientData.clients.find(c => c.id === client_id)
+
   return createDummyApiResponse({
     buildings: [
       {
-        ...building,
-        id: getUniqueId()
+        ...fields,
+        ...Object.keys(custom_fields).reduce((fieldNamesToValues, fieldId) => {
+          const field = client.custom_fields.find(f => f.id === fieldId)
+          const val = custom_fields[fieldId]
+
+          fieldNamesToValues[field.name] = val
+          return fieldNamesToValues
+        }, {}),
+        client_name: client.name,
+        id: getUniqueId(),
       }
     ]
   })

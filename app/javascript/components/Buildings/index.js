@@ -79,7 +79,7 @@ const Buildings = () => {
         {isCreating &&
           <NewBuilding
             clients={clients}
-            onSave={() => handleCreate(tempId, building)}
+            onSave={handleCreate}
             onCancel={stopCreating}
             isLoading={isSavingNewBuilding}
           />

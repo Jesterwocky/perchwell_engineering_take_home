@@ -1,6 +1,8 @@
-let nextId = 1
+import { stringify } from "./format"
+
+let nextId = 100
 
 export function getUniqueId() {
-  return stringify(nextId)
   nextId ++
+  return stringify(nextId)
 }

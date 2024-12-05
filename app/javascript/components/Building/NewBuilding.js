@@ -17,22 +17,33 @@ function NewBuilding({ onSave, onCancel, clients, isLoading }) {
   const [client, setClient] = useState(null)
   const [edits, setEdits] = useState({})
 
+  const customFields = client?.custom_fields ?? []
   const fields = [
     ...defaultBuildingFields,
-    ...(client?.custom_fields ?? [])
+    ...customFields,
   ];
 
   function handleClientChange(clientId) {
     const client = clients.find(c => c.id === clientId);
     setClient(client)
-    setEdits({})
+    setEdits({ client_id: client.id })
   }
 
-  function handleFieldEdit(fieldName, val) {
-    setEdits({
-      ...edits,
-      [fieldName]: val,
-    })
+  function handleFieldEdit(field, val) {
+    if (field.isDefault) {
+      setEdits({
+        ...edits,
+        [field.name]: val,
+      })
+    } else {
+      setEdits({
+        ...edits,
+        custom_fields: {
+          ...edits.customFields,
+          [field.id]: val
+        }
+      })
+    }
   }
 
   function handleSave() {
@@ -58,13 +69,13 @@ function NewBuilding({ onSave, onCancel, clients, isLoading }) {
           {...field}
           val={edits[field.name]}
           isEditing={true}
-          onChange={val => handleFieldEdit(field.name, val)}
+          onChange={val => handleFieldEdit(field, val)}
         />
       ))}
 
       <div className="building-controls">
         <>
-          <BuildingControl onClick={handleSave}>
+          <BuildingControl onClick={handleSave} disabled={!client || !edits.address}>
             Save
           </BuildingControl>
           {" "}
