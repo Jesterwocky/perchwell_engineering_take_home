@@ -78,6 +78,7 @@ const Buildings = () => {
       <div className="buildings-container">
         {isCreating &&
           <NewBuilding
+            clients={clients}
             onSave={() => handleCreate(tempId, building)}
             onCancel={stopCreating}
             isLoading={isSavingNewBuilding}

@@ -22,9 +22,8 @@ function NewBuilding({ onSave, onCancel, clients, isLoading }) {
     ...(client?.custom_fields ?? [])
   ];
 
-  function handleClientChange(e) {
-    const id = e.target.value;
-    const client = clients.find(c => c.id === id);
+  function handleClientChange(clientId) {
+    const client = clients.find(c => c.id === clientId);
     setClient(client)
     setEdits({})
   }
@@ -47,23 +46,21 @@ function NewBuilding({ onSave, onCancel, clients, isLoading }) {
       <Field
         name="Client"
         type={fieldType.enum}
-        options={clients}
+        options={clients.map(c => ({ name: titleify(c.name), id: c.id }))}
         val={client?.id}
         isEditing={true}
         onChange={handleClientChange}
       />
 
-      {fields.map(field => {
+      {client && fields.map(field => (
         <Field
           key={field.id}
-          name={field.name}
-          type={field.type}
-          options={field.options}
+          {...field}
           val={edits[field.name]}
           isEditing={true}
           onChange={val => handleFieldEdit(field.name, val)}
         />
-      })}
+      ))}
 
       <div className="building-controls">
         <>

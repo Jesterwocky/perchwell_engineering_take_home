@@ -25,6 +25,9 @@ function FieldValue({ type, val, options, onChange }) {
           defaultValue={val}
           onChange={handleChange}
         >
+          <option value="">
+            Select client
+          </option>
           {(options ?? []).map(option => (
             <option
               key={option?.id ?? option?.name ?? option}
