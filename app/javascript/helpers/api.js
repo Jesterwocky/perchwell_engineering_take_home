@@ -1,5 +1,4 @@
 import { getUniqueId } from '.'
-import { getDataFromApiResponse } from './format'
 
 const dummyBuildingsData = {
   buildings: [
@@ -101,8 +100,15 @@ function dummyCreateBuilding(building) {
 }
 
 function dummyUpdateBuilding(id, updates) {
+  const { custom_fields, ...otherUpdates } = updates
+
   return createDummyApiResponse({
-    buildings: []
+    buildings: [
+      {
+        id,
+        ...otherUpdates
+      }
+    ]
   })
 }
 
@@ -110,8 +116,7 @@ export async function fetchBuildings(page = null) {
   // TODO: implement real API call
   try {
     const res = await new Promise(resolve => resolve(dummyGetBuildings()))
-    const data = getDataFromApiResponse(res)
-    return data.buildings
+    return res.buildings
   } catch (error) {
     return new Error('Could not fetch buildings')
   }
@@ -120,8 +125,7 @@ export async function fetchBuildings(page = null) {
 export async function fetchClientData() {
   try {
     const res = await new Promise(resolve => resolve(dummyGetClientData()))
-    const data = getDataFromApiResponse(res)
-    return data.clients
+    return res.clients
   } catch (error) {
     return new Error('Could not fetch client data')
   }
@@ -130,8 +134,7 @@ export async function fetchClientData() {
 export async function createBuilding(building) {
   try {
     const res = await new Promise(resolve => resolve(dummyCreateBuilding(building)))
-    const data = getDataFromApiResponse(res)
-    return data.buildings[0]
+    return res.buildings[0]
   } catch (error) {
     return new Error('Could not create building')
   }
@@ -140,8 +143,7 @@ export async function createBuilding(building) {
 export async function updateBuilding(id, updates) {
   try {
     const res = await new Promise(resolve => resolve(dummyUpdateBuilding(id, updates)))
-    const data = getDataFromApiResponse(res)
-    return data.buildings[0]
+    return res.buildings[0]
   } catch (error) {
 
   }

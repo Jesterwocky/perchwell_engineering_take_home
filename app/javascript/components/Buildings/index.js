@@ -54,8 +54,14 @@ const Buildings = () => {
 
   async function handleUpdateBuilding(id, updates) {
     try {
-      debugger
-      updateBuilding(id, updates)
+      const building = await updateBuilding(id, updates)
+      const buildingIndex = buildings.findIndex(b => b.id === id)
+      const buildingsCopy = [...buildings]
+      buildingsCopy[buildingIndex] = {
+        ...buildingsCopy[buildingIndex],
+        ...building
+      }
+      setBuildings(buildingsCopy)
     } catch (error) {
       // TODO: handle error
     }

@@ -1,8 +1,3 @@
-export function getDataFromApiResponse(apiResponse) {
-  const { status, ...restOfData } = apiResponse
-  return restOfData
-}
-
 export function stringify(data) {
   return typeof data === 'string'
     ? data
