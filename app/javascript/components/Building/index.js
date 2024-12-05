@@ -12,9 +12,7 @@ import BuildingControl from '../BuildingControl';
 // Styles
 import './styles.css';
 
-function Building({ building, customFields }) {
-  const { address, client_name: clientName } = building;
-
+function Building({ building, customFields, onSave }) {
   const [isEditing, setIsEditing] = useState(false);
   const [edits, setEdits] = useState({});
 
@@ -34,32 +32,42 @@ function Building({ building, customFields }) {
     setEdits({});
   };
 
-  function handleFieldEdit(fieldName, val) {
-    setEdits({
-      ...edits,
-      [fieldName]: val,
-    });
+  function handleFieldEdit(field, val) {
+    if (field.isDefault) {
+      setEdits({
+        ...edits,
+        [field.name]: val,
+      })
+    } else {
+      setEdits({
+        ...edits,
+        custom_fields: {
+          ...edits.customFields,
+          [field.id]: val
+        }
+      })
+    }
   };
 
   function handleSave() {
-    // TODO: implement API call
+    onSave(edits)
     setIsEditing(false);
   };
 
   return (
     <div className="building">
-      <div className="client-name">{titleify(clientName)}</div>
+      <div className="client-name">{titleify(building.client_name)}</div>
   
       {isEditing
         ?
           <Field
             {...addressField}
-            val={address}
+            val={building.address}
             isEditing={true}
             onChange={val => handleFieldEdit(addressField, val)}
           />
         :
-          <div className="address-display">{address}</div>
+          <div className="address-display">{building.address}</div>
       }
 
       {fields.map(field => (

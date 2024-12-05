@@ -100,6 +100,12 @@ function dummyCreateBuilding(building) {
   })
 }
 
+function dummyUpdateBuilding(id, updates) {
+  return createDummyApiResponse({
+    buildings: []
+  })
+}
+
 export async function fetchBuildings(page = null) {
   // TODO: implement real API call
   try {
@@ -128,5 +134,15 @@ export async function createBuilding(building) {
     return data.buildings[0]
   } catch (error) {
     return new Error('Could not create building')
+  }
+}
+
+export async function updateBuilding(id, updates) {
+  try {
+    const res = await new Promise(resolve => resolve(dummyUpdateBuilding(building)))
+    const data = getDataFromApiResponse(res)
+    return data.buildings[0]
+  } catch (error) {
+
   }
 }

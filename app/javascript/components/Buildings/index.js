@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 // Helpers
 import { useEffectOnMount } from '../../helpers/customHooks';
-import { fetchBuildings, fetchClientData, createBuilding } from '../../helpers/api';
+import { fetchBuildings, fetchClientData, createBuilding, updateBuilding } from '../../helpers/api';
 
 // Components
 import Building from '../Building';
@@ -52,6 +52,15 @@ const Buildings = () => {
     }
   }
 
+  async function handleUpdateBuilding(id, updates) {
+    try {
+      debugger
+      updateBuilding(id, updates)
+    } catch (error) {
+      // TODO: handle error
+    }
+  }
+
   function getCustomFields(clientName) {
     const client = (clients ?? []).find(c => c.name === clientName)
     return (client?.custom_fields ?? [])
@@ -89,6 +98,7 @@ const Buildings = () => {
           <Building
             key={building.id}
             building={building}
+            onSave={updates => handleUpdateBuilding(building.id, updates)}
             customFields={getCustomFields(building.client_name)}
           />
         ))}
