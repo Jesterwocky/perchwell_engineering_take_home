@@ -139,7 +139,7 @@ export async function createBuilding(building) {
 
 export async function updateBuilding(id, updates) {
   try {
-    const res = await new Promise(resolve => resolve(dummyUpdateBuilding(building)))
+    const res = await new Promise(resolve => resolve(dummyUpdateBuilding(id, updates)))
     const data = getDataFromApiResponse(res)
     return data.buildings[0]
   } catch (error) {
