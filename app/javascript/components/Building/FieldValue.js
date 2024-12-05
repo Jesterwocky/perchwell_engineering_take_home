@@ -2,9 +2,9 @@
 import React from 'react';
 import { fieldType } from '../../constants';
 
-function FieldValue({ type, val, options, handleEdit }) {
+function FieldValue({ type, val, options, onChange }) {
   function handleChange(e) {
-    handleEdit(e.target.value)
+    onChange(e.target.value)
   }
 
   switch (type) {

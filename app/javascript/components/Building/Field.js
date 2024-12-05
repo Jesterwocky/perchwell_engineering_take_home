@@ -7,7 +7,7 @@ import { stringify, sentenceify } from '../../helpers/format';
 // Components
 import FieldValue from './FieldValue';
 
-function Field({ type, options, name, val, isEditing, handleEdit }) {
+function Field({ type, options, name, val, isEditing, onChange }) {
   return (
     <div className='field-container'>
       <span className="field-name">
@@ -19,7 +19,7 @@ function Field({ type, options, name, val, isEditing, handleEdit }) {
             type={type}
             val={val}
             options={options}
-            handleEdit={handleEdit}
+            onChange={onChange}
           />
         : stringify(val)
       }

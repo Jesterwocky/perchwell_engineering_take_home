@@ -73,8 +73,8 @@ function Building({ building, customFields }) {
           key={`${client}-${address}-${fieldName}`}
           name={fieldName}
           val={otherFields[fieldName]}
-          {...getFieldTypeConfig(fieldName)}
           isEditing={isEditing}
+          {...getFieldTypeConfig(fieldName)}
           onChange={val => handleFieldEdit(fieldName, val)}
         />
       ))}
