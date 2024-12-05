@@ -13,10 +13,17 @@ import BuildingControl from '../BuildingControl';
 import './styles.css';
 
 function Building({ building, customFields }) {
-  const { id, address, client_name: client, ...otherFields } = building;
+  const { address, client_name: clientName } = building;
 
   const [isEditing, setIsEditing] = useState(false);
   const [edits, setEdits] = useState({});
+
+  const addressField = defaultBuildingFields.find(f => f.name === "address")
+  const otherFields = defaultBuildingFields.filter(f => f.name !== "address")
+  const fields = [
+    ...otherFields,
+    ...customFields
+  ]
 
   function handleStartEdit() {
     setIsEditing(true);
@@ -39,43 +46,29 @@ function Building({ building, customFields }) {
     setIsEditing(false);
   };
 
-
-  function getFieldTypeConfig(fieldName) {    
-    const defaultField = defaultBuildingFields.find(f => f.name === fieldName);
-
-    if (defaultField) {
-      return defaultField
-    } else {
-      const field = customFields.find(customField => customField.name === fieldName);
-      return field ?? {}
-    }
-  }
-
   return (
     <div className="building">
-      <div className="client-name">{titleify(client)}</div>
+      <div className="client-name">{titleify(clientName)}</div>
   
       {isEditing
         ?
           <Field
-            name="address"
+            {...addressField}
             val={address}
             isEditing={true}
-            onChange={val => handleFieldEdit("address", val)}
-            className="address-field"
+            onChange={val => handleFieldEdit(addressField, val)}
           />
         :
           <div className="address-display">{address}</div>
       }
 
-      {Object.keys(otherFields).map(fieldName => (
+      {fields.map(field => (
         <Field
-          key={`${client}-${address}-${fieldName}`}
-          name={fieldName}
-          val={otherFields[fieldName]}
+          key={field.id}
+          {...field}
+          val={building[field.name]}
           isEditing={isEditing}
-          {...getFieldTypeConfig(fieldName)}
-          onChange={val => handleFieldEdit(fieldName, val)}
+          onChange={val => handleFieldEdit(field, val)}
         />
       ))}
 
