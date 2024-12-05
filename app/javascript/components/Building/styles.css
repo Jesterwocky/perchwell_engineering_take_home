@@ -1,5 +1,38 @@
 .building {
   border: 1px solid black;
   margin-bottom: 10px;
-  padding: 0 15px 15px;
+  padding: 15px;
+}
+
+.field-container {
+  min-height: 25px;
+  padding-bottom: 5px;
+}
+
+.field-data {
+  min-height: 60px;
+}
+
+.field-name {
+  font-weight: 700;
+}
+
+.client-name {
+  font-style: italic;
+}
+
+.field-value-container {
+  min-height: 30px;
+}
+
+.building-controls {
+  margin-top: 15px;
+}
+
+.cancel-button {
+  margin-left: 5px;
+}
+
+input {
+  min-width: 50%;
 }
