@@ -78,7 +78,7 @@ function dummyGetClientData() {
 }
 
 function dummyCreateBuilding(building) {
-  const { client_id, custom_fields, ...fields } = building
+  const { client_id, custom_fields = {}, ...fields } = building
 
   const client = dummyClientData.clients.find(c => c.id === client_id)
 
