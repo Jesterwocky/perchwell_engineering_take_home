@@ -4,6 +4,17 @@
   padding: 15px;
 }
 
+.client-name {
+  margin-bottom: 15px;
+  font-style: italic;
+}
+
+.address-display {
+  padding: 0 0 15px;
+  font-size: 25px;
+  font-weight: 700;
+}
+
 .field-container {
   min-height: 25px;
   padding-bottom: 5px;
@@ -17,10 +28,6 @@
   font-weight: 700;
 }
 
-.client-name {
-  font-style: italic;
-}
-
 .field-value-container {
   min-height: 30px;
 }
@@ -32,6 +39,10 @@
 .cancel-button {
   margin-left: 5px;
 }
+
+/* .address-field {
+  
+} */
 
 input {
   min-width: 50%;

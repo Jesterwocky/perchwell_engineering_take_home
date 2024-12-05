@@ -70,6 +70,7 @@ function NewBuilding({ onSave, onCancel, clients, isLoading }) {
           <BuildingControl onClick={handleSave}>
             Save
           </BuildingControl>
+          {" "}
           <BuildingControl onClick={onCancel}>
             Cancel
           </BuildingControl>

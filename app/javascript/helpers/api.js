@@ -7,6 +7,8 @@ const dummyBuildingsData = {
       "id": "1",
       "client_name": "rock_walls_only",
       "address": "45 Main St",
+      "state": "NY",
+      "zip": "10001",
       "rock_wall_size": "15",
       "rock_wall_length": "26"
     },
@@ -14,6 +16,8 @@ const dummyBuildingsData = {
       "id": "2",
       "client_name": "brick_walls_only",
       "address": "123 Side St",
+      "state": "NY",
+      "zip": "10001",
       "brick_color": "red",
       "brick_count": "0"
     }

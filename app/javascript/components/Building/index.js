@@ -50,13 +50,22 @@ function Building({ building, customFields }) {
     };
   };
 
-  //TODO: ref for field names. Only update when props change
-
   return (
     <div className="building">
       <div className="client-name">{titleify(client)}</div>
   
-      <h2>{address}</h2>
+      {isEditing
+        ?
+          <Field
+            name="address"
+            val={address}
+            isEditing={true}
+            onChange={val => handleFieldEdit("address", val)}
+            className="address-field"
+          />
+        :
+          <div className="address-display">{address}</div>
+      }
 
       {Object.keys(otherFields).map(fieldName => (
         <Field
