@@ -6,6 +6,8 @@ export function getDataFromApiResponse(apiResponse) {
 export function stringify(data) {
   return typeof data === 'string'
     ? data
+    : data === undefined
+    ? '--'
     : '' + data;
 }
 
