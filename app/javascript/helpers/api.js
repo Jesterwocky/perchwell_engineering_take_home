@@ -1,5 +1,6 @@
 import { getUniqueId } from '.'
 
+
 const dummyBuildingsData = {
   buildings: [
     {
@@ -77,36 +78,24 @@ function dummyGetClientData() {
 }
 
 function dummyCreateBuilding(building) {
-  const { client_id, custom_fields = {}, ...fields } = building
-
-  const client = dummyClientData.clients.find(c => c.id === client_id)
+  const newBuilding = {
+    ...building,
+    id: getUniqueId(),
+  }
 
   return createDummyApiResponse({
     buildings: [
-      {
-        ...fields,
-        ...Object.keys(custom_fields).reduce((fieldNamesToValues, fieldId) => {
-          const field = client.custom_fields.find(f => f.id === fieldId)
-          const val = custom_fields[fieldId]
-
-          fieldNamesToValues[field.name] = val
-          return fieldNamesToValues
-        }, {}),
-        client_name: client.name,
-        id: getUniqueId(),
-      }
+      newBuilding
     ]
   })
 }
 
 function dummyUpdateBuilding(id, updates) {
-  const { custom_fields, ...otherUpdates } = updates
-
   return createDummyApiResponse({
     buildings: [
       {
         id,
-        ...otherUpdates
+        ...updates
       }
     ]
   })
