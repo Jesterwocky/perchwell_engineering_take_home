@@ -13,6 +13,7 @@ function Field({ type, options, name, val, isEditing, onChange }) {
       <span className="field-name">
         {sentenceify(name)}:
       </span>{" "}
+
       {isEditing
         ?
           <FieldValue

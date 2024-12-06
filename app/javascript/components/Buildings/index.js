@@ -20,14 +20,14 @@ const Buildings = () => {
   const [clients, setClients] = useState([])
 
   async function getAllBuildings() {
-    const buildings = await fetchBuildings()
-    setBuildings(buildings)
+    const fetched = await fetchBuildings()
+    setBuildings(fetched)
   }
 
   async function getClients() {
     // Includes custom fields, needed for create or edit.
-    const clients = await fetchClientData()
-    setClients(clients)
+    const fetched = await fetchClientData()
+    setClients(fetched)
   }
 
   function startCreating() {
@@ -38,21 +38,21 @@ const Buildings = () => {
     setIsCreating(false)
   }
 
-  async function handleCreate(building) {
-    setIsSavingNewBuilding(true)
+  async function handleSaveNewBuilding(building) {
+    // setIsSavingNewBuilding(true)
 
     try {
       const newBuilding = await createBuilding(building)
       setBuildings([ newBuilding, ...buildings ])
-      setIsCreating(false)
+      stopCreating()
     } catch (error) {
       // TODO: handle error
     } finally {
-      setIsSavingNewBuilding(false)
+      // setIsSavingNewBuilding(false)
     }
   }
 
-  async function handleUpdateBuilding(id, updates) {
+  async function handleSaveChanges(id, updates) {
     try {
       const building = await updateBuilding(id, updates)
       const buildingIndex = buildings.findIndex(b => b.id === id)
@@ -94,9 +94,8 @@ const Buildings = () => {
         {isCreating &&
           <NewBuilding
             clients={clients}
-            onSave={handleCreate}
+            onSave={handleSaveNewBuilding}
             onCancel={stopCreating}
-            isLoading={isSavingNewBuilding}
           />
         }
 
@@ -104,7 +103,7 @@ const Buildings = () => {
           <Building
             key={building.id}
             building={building}
-            onSave={updates => handleUpdateBuilding(building.id, updates)}
+            onSave={updates => handleSaveChanges(building.id, updates)}
             customFields={getCustomFields(building.client_name)}
           />
         ))}

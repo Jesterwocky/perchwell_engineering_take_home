@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 
 // Helpers
-import { titleify } from '../../helpers/format';
 import { fieldType, defaultBuildingFields } from '../../constants';
 
 // Components
@@ -14,68 +13,57 @@ import BuildingControl from '../BuildingControl';
 import './styles.css';
 
 function NewBuilding({ onSave, onCancel, clients, isLoading }) {
-  const [client, setClient] = useState(null)
-  const [edits, setEdits] = useState({})
+  const [selectedClient, selectClient] = useState(null)
+  const [values, setValues] = useState({})
 
-  const customFields = client?.custom_fields ?? []
   const fields = [
     ...defaultBuildingFields,
-    ...customFields,
+    ...(selectedClient?.custom_fields ?? []),
   ];
 
-  function handleClientChange(clientId) {
-    const client = clients.find(c => c.id === clientId);
-    setClient(client)
-    setEdits({ client_id: client.id })
+  function handleClientChange(clientName) {
+    selectClient(clients.find(c => c.name === clientName));
+    setValues({ client_name: clientName })
   }
 
-  function handleFieldEdit(field, val) {
-    if (field.isDefault) {
-      setEdits({
-        ...edits,
-        [field.name]: val,
-      })
-    } else {
-      setEdits({
-        ...edits,
-        custom_fields: {
-          ...edits.customFields,
-          [field.id]: val
-        }
-      })
-    }
+  function handleFieldChange(fieldName, val) {
+    setValues({
+      ...values,
+      [fieldName]: val,
+    })
   }
 
   function handleSave() {
-    onSave(edits)
+    onSave(values)
   }
-
-  //TODO: ref for field names. Only update when props change
 
   return (
     <div className="building">
       <Field
         name="Client"
         type={fieldType.enum}
-        options={clients.map(c => ({ name: titleify(c.name), id: c.id }))}
-        val={client?.id}
+        options={clients.map(c => c.name)}
+        val={selectedClient?.name}
         isEditing={true}
         onChange={handleClientChange}
       />
 
-      {client && fields.map(field => (
+      {selectedClient && fields.map(field => (
         <Field
           key={field.id}
           {...field}
-          val={edits[field.name]}
+          val={values[field.name]}
           isEditing={true}
-          onChange={val => handleFieldEdit(field, val)}
+          onChange={val => handleFieldChange(field.name, val)}
         />
       ))}
 
       <div className="building-controls">
         <>
-          <BuildingControl onClick={handleSave} disabled={!client || !edits.address}>
+          <BuildingControl
+            onClick={handleSave}
+            disabled={!selectedClient || !values.address}
+          >
             Save
           </BuildingControl>
           {" "}

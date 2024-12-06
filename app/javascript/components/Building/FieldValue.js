@@ -1,6 +1,7 @@
 // Library
 import React from 'react';
 import { fieldType } from '../../constants';
+import { sentenceify, titleify } from '../../helpers/format';
 
 function FieldValue({ type, val, options, onChange }) {
   function handleChange(e) {
@@ -28,12 +29,10 @@ function FieldValue({ type, val, options, onChange }) {
           <option value="">
             Select...
           </option>
+
           {(options ?? []).map(option => (
-            <option
-              key={option?.id ?? option?.name ?? option}
-              value={option?.id ?? option?.name ?? option}
-            >
-              {option?.name ?? option}
+            <option key={option} value={option}>
+              {titleify(option)}
             </option>
           ))}
         </select>

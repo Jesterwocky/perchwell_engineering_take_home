@@ -17,9 +17,8 @@ function Building({ building, customFields, onSave }) {
   const [edits, setEdits] = useState({});
 
   const addressField = defaultBuildingFields.find(f => f.name === "address")
-  const otherFields = defaultBuildingFields.filter(f => f.name !== "address")
-  const fields = [
-    ...otherFields,
+  const bodyFields = [
+    ...defaultBuildingFields.filter(f => f.name !== "address"),
     ...customFields
   ]
 
@@ -32,21 +31,11 @@ function Building({ building, customFields, onSave }) {
     setEdits({});
   };
 
-  function handleFieldEdit(field, val) {
-    if (field.isDefault) {
-      setEdits({
-        ...edits,
-        [field.name]: val,
-      })
-    } else {
-      setEdits({
-        ...edits,
-        custom_fields: {
-          ...edits.customFields,
-          [field.id]: val
-        }
-      })
-    }
+  function handleFieldEdit(fieldName, val) {
+    setEdits({
+      ...edits,
+      [fieldName]: val,
+    })
   };
 
   function handleSave() {
@@ -56,7 +45,9 @@ function Building({ building, customFields, onSave }) {
 
   return (
     <div className="building">
-      <div className="client-name">{titleify(building.client_name)}</div>
+      <div className="client-name">
+        {titleify(building.client_name)}
+      </div>
   
       {isEditing
         ?
@@ -64,19 +55,21 @@ function Building({ building, customFields, onSave }) {
             {...addressField}
             val={building.address}
             isEditing={true}
-            onChange={val => handleFieldEdit(addressField, val)}
+            onChange={val => handleFieldEdit(addressField.name, val)}
           />
         :
-          <div className="address-display">{building.address}</div>
+          <div className="address-display">
+            {building.address}
+          </div>
       }
 
-      {fields.map(field => (
+      {bodyFields.map(field => (
         <Field
           key={field.id}
           {...field}
           val={building[field.name]}
           isEditing={isEditing}
-          onChange={val => handleFieldEdit(field, val)}
+          onChange={val => handleFieldEdit(field.name, val)}
         />
       ))}
 
