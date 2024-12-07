@@ -23,7 +23,6 @@ function NewBuilding({ onSave, onCancel, clients, isLoading }) {
 
   function handleClientChange(clientName) {
     selectClient(clients.find(c => c.name === clientName));
-    setValues({ client_name: clientName })
   }
 
   function handleFieldChange(fieldName, val) {
@@ -34,7 +33,10 @@ function NewBuilding({ onSave, onCancel, clients, isLoading }) {
   }
 
   function handleSave() {
-    onSave(values)
+    onSave({
+      client_id: selectedClient.id,
+      ...values
+    })
   }
 
   return (
