@@ -10,6 +10,13 @@ class Api::BuildingsController < ApplicationController
         zip: building.zip,
         client_name: building.client.name,
         client_id: building.client.id,
+        custom_fields: building.client&.custom_fields.map do |custom_field|
+          {
+            name: custom_field.name,
+            type: custom_field.data_type,
+            options: custom_field.options
+          }
+        end
       }.merge(
         building.custom_value.reduce({}) do |accum, custom_value|
           accum[custom_value.custom_field&.name] = custom_value.custom_field&.data_type === 'number' ?

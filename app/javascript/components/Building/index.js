@@ -12,14 +12,14 @@ import BuildingControl from '../BuildingControl';
 // Styles
 import './styles.css';
 
-function Building({ building, customFields, onSave }) {
+function Building({ building, onSave }) {
   const [isEditing, setIsEditing] = useState(false);
   const [edits, setEdits] = useState({});
 
   const addressField = defaultBuildingFields.find(f => f.name === "address")
   const bodyFields = [
     ...defaultBuildingFields.filter(f => f.name !== "address"),
-    ...customFields
+    ...building.custom_fields
   ]
 
   function handleStartEdit() {
@@ -65,7 +65,7 @@ function Building({ building, customFields, onSave }) {
 
       {bodyFields.map(field => (
         <Field
-          key={field.id}
+          key={`${building.id}-${field.name}`}
           {...field}
           val={building[field.name]}
           isEditing={isEditing}

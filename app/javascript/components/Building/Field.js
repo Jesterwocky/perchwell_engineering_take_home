@@ -17,6 +17,7 @@ function Field({ type, options, name, val, isEditing, onChange }) {
       {isEditing
         ?
           <FieldValue
+            name={name}
             type={type}
             val={val}
             options={options}

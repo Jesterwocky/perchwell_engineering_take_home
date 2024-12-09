@@ -1,5 +1,5 @@
 // Library
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 // Helpers
 import { useEffectOnMount } from '../../helpers/customHooks';
@@ -56,6 +56,7 @@ const Buildings = () => {
     try {
       const building = await updateBuilding(id, updates)
       const buildingIndex = buildings.findIndex(b => b.id === id)
+
       const buildingsCopy = [...buildings]
       buildingsCopy[buildingIndex] = {
         ...buildingsCopy[buildingIndex],
@@ -73,11 +74,9 @@ const Buildings = () => {
   }
 
   useEffectOnMount(() => {
-    // May want to paginate in app in the future, but for now UI doesn't include page controls
-    // so we fetch them all.
     getAllBuildings()
 
-    // Needed for create or edit. For now, we'll just fetch them all. In future could lazy load.
+    // Needed to create new buildings. Can probably lazy load, but for now we'll just do it on mount.
     getClients()
   })
 

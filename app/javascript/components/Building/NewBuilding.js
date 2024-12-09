@@ -43,9 +43,9 @@ function NewBuilding({ onSave, onCancel, clients, isLoading }) {
     <div className="building">
       <Field
         name="Client"
+        val={selectedClient?.name}
         type={fieldType.enum}
         options={clients.map(c => c.name)}
-        val={selectedClient?.name}
         isEditing={true}
         onChange={handleClientChange}
       />
