@@ -39,7 +39,6 @@ function NewBuilding({ onSave, onCancel, clients, isLoading }) {
     })
   }
 
-  debugger
   return (
     <div className="building">
       <Field
