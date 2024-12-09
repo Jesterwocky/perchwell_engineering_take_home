@@ -14,13 +14,13 @@ import BuildingControl from '../BuildingControl';
 import './styles.css';
 
 const Buildings = () => {
-  const [isSavingNewBuilding, setIsSavingNewBuilding] = useState(false)
   const [isCreating, setIsCreating] = useState(false)
   const [buildings, setBuildings] = useState([])
   const [clients, setClients] = useState([])
 
   async function getAllBuildings() {
     const fetched = await fetchBuildings()
+    fetched.sort((b1, b2) => new Date(b2.created_at) - new Date(b1.created_at))
     setBuildings(fetched)
   }
 
@@ -39,23 +39,18 @@ const Buildings = () => {
   }
 
   async function handleSaveNewBuilding(building) {
-    // setIsSavingNewBuilding(true)
-
     try {
       const newBuilding = await createBuilding(building)
       setBuildings([ newBuilding, ...buildings ])
       stopCreating()
     } catch (error) {
       // TODO: handle error
-    } finally {
-      // setIsSavingNewBuilding(false)
     }
   }
 
   async function handleSaveChanges(id, updates) {
     try {
       const building = await updateBuilding(id, updates)
-      debugger
       const buildingIndex = buildings.findIndex(b => b.id === id)
 
       const buildingsCopy = [...buildings]

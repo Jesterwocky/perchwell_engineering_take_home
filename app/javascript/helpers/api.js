@@ -147,7 +147,6 @@ export async function updateBuilding(id, updates) {
       }
     })
     const data = await res.json()
-    debugger
     return data[0]
   } catch (error) {
     return new Error('Could not update building')

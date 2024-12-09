@@ -12,6 +12,8 @@ class Api::BuildingsController < ApplicationController
         zip: building.zip,
         client_name: building.client.name,
         client_id: building.client.id,
+        created_at: building.created_at,
+        updated_at: building.updated_at,
         custom_fields: building.client&.custom_fields.map do |custom_field|
           {
             name: custom_field.name,
@@ -62,6 +64,8 @@ class Api::BuildingsController < ApplicationController
         zip: @building.zip,
         client_name: @building.client.name,
         client_id: @building.client.id,
+        created_at: @building.created_at,
+        updated_at: @building.updated_at,
         custom_fields: @building.client&.custom_fields.map do |field|
           {
             name: field.name,
@@ -122,6 +126,8 @@ class Api::BuildingsController < ApplicationController
         zip: @building.zip,
         client_name: @building.client.name,
         client_id: @building.client.id,
+        created_at: @building.created_at,
+        updated_at: @building.updated_at,
         custom_fields: @building.client&.custom_fields.map do |custom_field|
           {
             name: custom_field.name,
