@@ -8,6 +8,7 @@ import { stringify, sentenceify } from '../../helpers/format';
 import FieldValue from './FieldValue';
 
 function Field({ type, options, name, val, isEditing, onChange }) {
+  debugger
   return (
     <div className='field-container'>
       <span className="field-name">

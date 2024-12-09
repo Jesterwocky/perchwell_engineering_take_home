@@ -123,8 +123,15 @@ export async function fetchClientData() {
 
 export async function createBuilding(building) {
   try {
-    const res = await new Promise(resolve => resolve(dummyCreateBuilding(building)))
-    return res.buildings[0]
+    const res = await fetch('api/buildings', {
+      method: 'POST',
+      body: JSON.stringify({ building }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    const data = await res.json()
+    return data[0]
   } catch (error) {
     return new Error('Could not create building')
   }
@@ -135,6 +142,6 @@ export async function updateBuilding(id, updates) {
     const res = await new Promise(resolve => resolve(dummyUpdateBuilding(id, updates)))
     return res.buildings[0]
   } catch (error) {
-
+    return new Error('Could not update building')
   }
 }

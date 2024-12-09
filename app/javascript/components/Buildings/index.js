@@ -1,5 +1,5 @@
 // Library
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 
 // Helpers
 import { useEffectOnMount } from '../../helpers/customHooks';
@@ -68,11 +68,6 @@ const Buildings = () => {
     }
   }
 
-  function getCustomFields(clientName) {
-    const client = (clients ?? []).find(c => c.name === clientName)
-    return (client?.custom_fields ?? [])
-  }
-
   useEffectOnMount(() => {
     getAllBuildings()
 
@@ -103,7 +98,6 @@ const Buildings = () => {
             key={building.id}
             building={building}
             onSave={updates => handleSaveChanges(building.id, updates)}
-            customFields={getCustomFields(building.client_name)}
           />
         ))}
       </div>

@@ -19,7 +19,7 @@ function Building({ building, onSave }) {
   const addressField = defaultBuildingFields.find(f => f.name === "address")
   const bodyFields = [
     ...defaultBuildingFields.filter(f => f.name !== "address"),
-    ...building.custom_fields
+    ...(building?.custom_fields ?? [])
   ]
 
   function handleStartEdit() {

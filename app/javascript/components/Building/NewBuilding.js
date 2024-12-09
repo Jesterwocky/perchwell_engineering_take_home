@@ -39,6 +39,7 @@ function NewBuilding({ onSave, onCancel, clients, isLoading }) {
     })
   }
 
+  debugger
   return (
     <div className="building">
       <Field
@@ -53,7 +54,9 @@ function NewBuilding({ onSave, onCancel, clients, isLoading }) {
       {selectedClient && fields.map(field => (
         <Field
           key={field.id}
-          {...field}
+          name={field.name}
+          options={field.options}
+          type={field.data_type}
           val={values[field.name]}
           isEditing={true}
           onChange={val => handleFieldChange(field.name, val)}

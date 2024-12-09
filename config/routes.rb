@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   root "welcome#index"
 
   namespace :api do
-    resources :buildings, only: [:index, :show, :create, :update]
+    resources :buildings, only: [:index, :create, :update]
   end
 
   namespace :api do
