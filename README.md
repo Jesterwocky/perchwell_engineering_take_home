@@ -6,10 +6,8 @@ Welcome to the Perchwell take-home assignment!
 
 Please see the requirements [here](https://github.com/RivingtonHoldings/engineering_take_home/blob/main/REQUIREMENTS.md).
 
-# JESSIE WALKER NOTE
+# JESSIE WALKER NOTES
 
-This submission includes:
-1. Frontend
-2. Database migrations
+Create/reset the database:
+  docker-compose run web rails db:drop db:create db:migrate db:seed
 
-Ran out of time to create the API.
