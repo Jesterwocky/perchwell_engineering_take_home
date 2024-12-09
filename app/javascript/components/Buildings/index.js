@@ -55,6 +55,7 @@ const Buildings = () => {
   async function handleSaveChanges(id, updates) {
     try {
       const building = await updateBuilding(id, updates)
+      debugger
       const buildingIndex = buildings.findIndex(b => b.id === id)
 
       const buildingsCopy = [...buildings]

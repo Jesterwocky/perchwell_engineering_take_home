@@ -39,11 +39,6 @@ class Api::BuildingsController < ApplicationController
     custom_vals = request_body_params
       .reject { |param, val| ['client_id', 'address', 'state', 'zip'].include?(param) }
 
-    puts 'BASIC VALS -------------------'
-    puts basic_vals
-    puts 'CUSTOM VALS -------------------'
-    puts custom_vals
-
     @building = Building.new(basic_vals)
 
     if @building.save
@@ -91,14 +86,15 @@ class Api::BuildingsController < ApplicationController
 
   def update
     basic_vals = request_body_params
-      .select { |param, val| [:client_id, :address, :state, :zip].include?(param) }
+      .select { |param, val| ['client_id', 'address', 'state', 'zip'].include?(param) }
 
     custom_vals = request_body_params
-      .reject { |param, val| [:client_id, :address, :state, :zip].include?(param) }
+      .reject { |param, val| ['client_id', 'address', 'state', 'zip'].include?(param) }
 
     @building = Building.find(params[:id])
+
     if @building.update(basic_vals)
-      @custom_values = custom_vals.map do |param, val|
+      @custom_values = custom_vals.to_h.map do |param, val|
         custom_fields = @building.client&.custom_fields || []
         custom_field = custom_fields.find(param)
 
@@ -119,14 +115,14 @@ class Api::BuildingsController < ApplicationController
       end
 
       # TODO: helper
-      res = {
-        id: building.id,
-        address: building.address,
-        state: building.state,
-        zip: building.zip,
-        client_name: building.client.name,
-        client_id: building.client.id,
-        custom_fields: building.client&.custom_fields.map do |custom_field|
+      res = [{
+        id: @building.id,
+        address: @building.address,
+        state: @building.state,
+        zip: @building.zip,
+        client_name: @building.client.name,
+        client_id: @building.client.id,
+        custom_fields: @building.client&.custom_fields.map do |custom_field|
           {
             name: custom_field.name,
             type: custom_field.data_type,
@@ -134,13 +130,13 @@ class Api::BuildingsController < ApplicationController
           }
         end
       }.merge(
-        building.custom_value.reduce({}) do |accum, custom_value|
+        @building.custom_value.reduce({}) do |accum, custom_value|
           accum[custom_value.custom_field&.name] = custom_value.custom_field&.data_type === 'number' ?
             custom_value.number_value :
             custom_value.string_value
           accum
         end
-      )
+      )]
   
       render json: res
     else

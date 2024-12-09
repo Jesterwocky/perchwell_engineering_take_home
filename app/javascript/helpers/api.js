@@ -139,8 +139,16 @@ export async function createBuilding(building) {
 
 export async function updateBuilding(id, updates) {
   try {
-    const res = await new Promise(resolve => resolve(dummyUpdateBuilding(id, updates)))
-    return res.buildings[0]
+    const res = await fetch(`api/buildings/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ building: updates }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    const data = await res.json()
+    debugger
+    return data[0]
   } catch (error) {
     return new Error('Could not update building')
   }
