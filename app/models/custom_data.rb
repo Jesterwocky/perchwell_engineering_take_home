@@ -2,6 +2,8 @@ class CustomData < ApplicationRecord
   belongs_to :building
   belongs_to :custom_field
 
+  validates :building, presence: true
+  validates :custom_field, presence: true
   validate :data_type_and_field_value_matches_field, on: create
 
   private
