@@ -174,7 +174,7 @@ CustomValue.find_or_create_by(
 CustomValue.find_or_create_by(
   building: building10,
   custom_field: tree_age,
-  string_value: 2.5)
+  number_value: 2.5)
 
 building11 = Building.find_or_create_by(client: wood, address: '402 Barnacle Blvd', state: 'NY', zip: '10004')
 CustomValue.find_or_create_by(
@@ -188,7 +188,7 @@ CustomValue.find_or_create_by(
 CustomValue.find_or_create_by(
   building: building11,
   custom_field: tree_age,
-  string_value: 1)
+  number_value:  1)
 
 building12 = Building.find_or_create_by(client: wood, address: '403 Fancyfeast Lane', state: 'NY', zip: '10004')
 CustomValue.find_or_create_by(
@@ -202,7 +202,7 @@ CustomValue.find_or_create_by(
 CustomValue.find_or_create_by(
   building: building12,
   custom_field: tree_age,
-  string_value: 4)
+  number_value: 4)
 
 building13 = Building.find_or_create_by(client: straw, address: '501 River Heights', state: 'NY', zip: '10005')
 CustomValue.find_or_create_by(
@@ -216,7 +216,7 @@ CustomValue.find_or_create_by(
 CustomValue.find_or_create_by(
   building: building13,
   custom_field: bushel_count,
-  string_value: 11)
+  number_value: 11)
 
 building14 = Building.find_or_create_by(client: straw, address: '502 Weatherby Street', state: 'NY', zip: '10005')
 CustomValue.find_or_create_by(
@@ -230,7 +230,7 @@ CustomValue.find_or_create_by(
 CustomValue.find_or_create_by(
   building: building14,
   custom_field: bushel_count,
-  string_value: 25)
+  number_value: 25)
 
 building15 = Building.find_or_create_by(client: straw, address: '503 Highfalutin Circle', state: 'NY', zip: '10005')
 CustomValue.find_or_create_by(
@@ -244,4 +244,4 @@ CustomValue.find_or_create_by(
 CustomValue.find_or_create_by(
   building: building15,
   custom_field: bushel_count,
-  string_value: 18)
+  number_value: 18)
