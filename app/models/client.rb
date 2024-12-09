@@ -1,5 +1,5 @@
 class Client < ApplicationRecord
-  has_many :buildings
+  has_many :building
   has_many :custom_fields
 
   validates :name, presence: true

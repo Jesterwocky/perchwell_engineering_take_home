@@ -102,19 +102,20 @@ function dummyUpdateBuilding(id, updates) {
 }
 
 export async function fetchBuildings(page = null) {
-  // TODO: implement real API call
   try {
-    const res = await new Promise(resolve => resolve(dummyGetBuildings()))
-    return res.buildings
+    const res = await fetch('/api/buildings')
+    const data = await res.json()
+    return data
   } catch (error) {
-    return new Error('Could not fetch buildings')
+    return error
   }
 }
 
 export async function fetchClientData() {
   try {
-    const res = await new Promise(resolve => resolve(dummyGetClientData()))
-    return res.clients
+    const res = await fetch('api/clients')
+    const data = await res.json()
+    return data
   } catch (error) {
     return new Error('Could not fetch client data')
   }

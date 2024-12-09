@@ -30,17 +30,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_07_063854) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "custom_data", force: :cascade do |t|
-    t.bigint "building_id", null: false
-    t.bigint "custom_field_id", null: false
-    t.decimal "number_value"
-    t.string "string_value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["building_id"], name: "index_custom_data_on_building_id"
-    t.index ["custom_field_id"], name: "index_custom_data_on_custom_field_id"
-  end
-
   create_table "custom_fields", force: :cascade do |t|
     t.bigint "client_id", null: false
     t.string "data_type"
@@ -51,8 +40,19 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_07_063854) do
     t.index ["client_id"], name: "index_custom_fields_on_client_id"
   end
 
+  create_table "custom_values", force: :cascade do |t|
+    t.bigint "building_id", null: false
+    t.bigint "custom_field_id", null: false
+    t.decimal "number_value"
+    t.string "string_value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["building_id"], name: "index_custom_values_on_building_id"
+    t.index ["custom_field_id"], name: "index_custom_values_on_custom_field_id"
+  end
+
   add_foreign_key "buildings", "clients"
-  add_foreign_key "custom_data", "buildings"
-  add_foreign_key "custom_data", "custom_fields"
   add_foreign_key "custom_fields", "clients"
+  add_foreign_key "custom_values", "buildings"
+  add_foreign_key "custom_values", "custom_fields"
 end

@@ -1,7 +1,26 @@
 class Api::BuildingsController < ApplicationController
   def index
-    @buildings = Building.all
-    render json: @buildings, status: :ok
+    @buildings = Building.includes(:custom_value, :client)
+
+    res = @buildings.map do |building|
+      {
+        id: building.id,
+        address: building.address,
+        state: building.state,
+        zip: building.zip,
+        client_name: building.client.name,
+        client_id: building.client.id,
+      }.merge(
+        building.custom_value.reduce({}) do |accum, custom_value|
+          accum[custom_value.custom_field&.name] = custom_value.custom_field&.data_type === 'number' ?
+            custom_value.number_value :
+            custom_value.string_value
+          accum
+        end
+      )
+    end
+
+    render json: res
   end
 
   def show

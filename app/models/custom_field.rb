@@ -1,6 +1,6 @@
 class CustomField < ApplicationRecord
   belongs_to :client
-  has_many :custom_datas
+  has_many :custom_values
 
   validates :client, presence: true
 

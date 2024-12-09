@@ -1,4 +1,4 @@
-class CustomData < ApplicationRecord
+class CustomValue < ApplicationRecord
   belongs_to :building
   belongs_to :custom_field
 
@@ -9,9 +9,9 @@ class CustomData < ApplicationRecord
   private
 
   def data_type_and_field_value_matches_field
-    field_config = Custom_Data.find(custom_data_id)
+    field_config = Custom_Field.find_by(id: custom_field_id)
 
-    case field_config.type
+    case field_config.data_type
     when 'number'
       unless string_value.blank?
         errors.add(:number_value, "wrong value type; value must be a number")
